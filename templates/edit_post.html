@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+.btn-blog { color: #ffffff; background-color: #4fc08d; border-color: #4fc08d; border-radius:0; margin-bottom:10px }
+.btn-blog:hover,.btn-blog:focus,.btn-blog:active,.btn-blog.active,.open .dropdown-toggle.btn-blog { color: white; background-color:	#2FA471; border-color: #2FA471;
+</style>
+        <div class="container">
+            <div class="row">
+                {% for row in rows %}
+                    <div class="col-md-6" style="margin:0px auto;">
+                        <h2>EDIT POST</h2>
+                        <form action="/edit_post" method="POST">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" value="{{ row[1] }}">
+                                <input type="hidden" id="auth_name" name="auth_name" value="{{session['name']}}">
+                                <input type="hidden" id="auth_id" name="auth_id" value="{{session['userid']}}">
+                                <input type="hidden" id="postid" name="postid" value="{{row[0]}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="content">Content</label>
+                                <textarea class="form-control" id="content" placeholder="Enter content" name="content" rows="4" cols="50">{{ row[2] }}</textarea>
+                            </div>
+                            <div class="form-group">
+                            <label>Category</label>
+
+                            <select id="cat" name="cat" onchange="add_cat()">
+                                <option value=""></option>
+                                {% for cat in cats %}
+                                    {% if row[6]==cat[0] %}
+                                        <option value="{{row[6]}}" selected>{{row[6]}}</option>
+                                    {% else %}
+                                        <option value="{{cat[0]}}">{{cat[0]}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="custom_cat" placeholder="Enter New Categoty" name="custom_cat">
+                                        <span class="input-group-btn">
+                                            <a class="btn btn-info"  href="javascript:void(0)" onclick="addcat()">Add</a>
+                                        </span>
+                                    </div>
+                                </div>
+                        </div>
+                            <button type="submit" class="btn btn-blog btn-default">UPDATE</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+<script type="text/javascript">
+    function add_cat(){
+        yourSelect = document.getElementById("cat");
+        sel_val = yourSelect.options[ yourSelect.selectedIndex ].text
+        if(sel_val=='add category'){
+            document.getElementById("custom_cat").style.display = "block";
+        }
+    }
+    function addcat(){
+        new_val = document.getElementById("custom_cat").value;
+        var cat = document.getElementById("cat");
+        var option = document.createElement("option");
+        option.text = new_val
+        option.value= new_val
+
+        cat.add(option);
+    }
+</script>
+{% endblock %}

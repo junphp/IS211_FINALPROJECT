@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+.btn-blog { color: #ffffff; background-color: #4fc08d; border-color: #4fc08d; border-radius:0; margin-bottom:10px }
+.btn-blog:hover,.btn-blog:focus,.btn-blog:active,.btn-blog.active,.open .dropdown-toggle.btn-blog { color: white; background-color:	#2FA471; border-color: #2FA471;
+</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" style="padding-bottom:15px;">
+                <form action="/category" method="POST">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="cat" placeholder="Enter Category" name="cat">&nbsp;&nbsp;
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-info">Add</button>
+                        </span>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <article>
+                {% if rows|length > 0 %}
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in rows %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ row[0] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                        <p>No category</p>
+                {% endif %}
+                </article>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

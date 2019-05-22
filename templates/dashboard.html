@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+.btn-blog { color: #ffffff; background-color: #4fc08d; border-color: #4fc08d; border-radius:0; margin-bottom:10px }
+.btn-blog:hover,.btn-blog:focus,.btn-blog:active,.btn-blog.active,.open .dropdown-toggle.btn-blog { color: white; background-color:	#2FA471; border-color: #2FA471;
+</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Hi, {{ session['name'] }}</h2>
+            </div>
+            <div class="col-md-6" style="text-align:right">
+                <a class="btn btn-blog" href="{{ url_for('create_post') }}">New post</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+                {% if rows|length > 0 %}
+                    {% for row in rows %}
+                    <h1>{{ row[1] }}</h1>
+                    <p>{{ row[2][0:500] }}</p>
+                    <div><span class="badge">{{ row[3] }}</span></div>
+                    <div class="row" style="margin-bottom:20px;">
+                        <div class="col-md-6"><span class="badge">By {{ row[5] }}</span></div>
+                        <div class="col-md-6"><span class="badge">By <a href="{{ url_for('category_view',cat=row[6]) }}">{{ row[6] }}</a></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a class="btn btn-blog pull-right marginBottom10" href="{{ url_for('read_post',postid=row[0]) }}">More Information</a>
+                        </div>
+                        <div class="col-md-9 float-right" style="text-align:right">
+                            <a class="btn btn-blog pull-right marginBottom10" href="{{ url_for('edit_post',postid=row[0]) }}">Edit</a>
+                            <a class="btn btn-blog pull-right marginBottom10" href="{{ url_for('delete_post',postid=row[0]) }}">Delete</a>
+                            {% if row[7] == 'p': %}
+                                <a class="btn btn-blog pull-right marginBottom10" href="{{ url_for('change_status',postid=row[0], status_action='u') }}">Unpublish</a>
+                            {% else: %}
+                                <a class="btn btn-blog pull-right marginBottom10" href="{{ url_for('change_status',postid=row[0], status_action='p') }}">Publish</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                                <hr>
+                    {% endfor %}
+                {% else %}
+                        <p>No post</p>
+                {% endif %}
+                </article>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

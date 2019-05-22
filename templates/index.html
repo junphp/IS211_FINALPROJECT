@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+.blogShort{ border-bottom:1px solid #ddd;}
+.add{background: #333; padding: 10%; height: 300px;}
+.btn-blog { color: #ffffff; background-color: #4fc08d; border-color: #4fc08d; border-radius:0; margin-bottom:10px }
+.btn-blog:hover,.btn-blog:focus,.btn-blog:active,.btn-blog.active,.open .dropdown-toggle.btn-blog { color: white; background-color:	#2FA471; border-color: #2FA471; }
+</style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if rows|length > 0 %}
+                    {% for row in rows %}
+                    <article>
+                                <h3>{{ row[1] }}</h3>
+                                <p>{{ row[2][0:500] }}</p>
+                                <div><span class="badge">{{ row[3] }}</span></div>
+                                <div class="row" style="margin-bottom:20px;">
+                                    <div class="col-md-6"><span class="badge">By {{ row[5] }}</span></div>
+                                    <div class="col-md-6"><span class="badge">By <a href="{{ url_for('category_view',cat=row[6]) }}">{{ row[6] }}</a></span></div>
+                                </div>
+                                <a class="btn btn-blog pull-right marginBottom10" href="{{ url_for('read_post',postid=row[0]) }}">More Information</a>
+                                <hr>
+                    </article>
+                    {% endfor %}
+                {% else %}
+                    <article>
+                        <p>No post</p>
+                    </article>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
