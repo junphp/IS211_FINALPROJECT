@@ -1,3 +1,3 @@
 user:admin@admin.com
 
-password:password
+password:admin
