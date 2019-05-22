@@ -1,2 +1,2 @@
-user:admin@admin.com
+user:admin@admin.com \n
 password:password
