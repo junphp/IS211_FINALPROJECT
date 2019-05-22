@@ -1,5 +1,5 @@
 Login info:
 
-user:admin@admin.com
+user: admin@admin.com
 
-password:admin
+password: admin
